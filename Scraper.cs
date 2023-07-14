@@ -1,33 +1,25 @@
 ﻿using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BundleARMACommands;
 
 public static class Scraper
 {
-    private static readonly string CommandsUrl = "https://community.bistudio.com/wiki/Category:Scripting_Commands";
-    private static readonly char[] Filter = { '►', ' ', '+', '-' };
+    public static readonly Uri[] UrisToScrape = { new("https://community.bistudio.com/wiki/Category:Scripting_Commands"), new("https://community.bistudio.com/wiki/Category:Functions") };
+    private static readonly string[] Filter = { "a != b", "! a", "a != b", "a % b", "a && b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b" };
 
-    public static async Task<List<string>> GetRawData(CancellationToken cancellationToken)
+    public static async Task<List<string>> GetRawData(Uri uri, CancellationToken cancellationToken)
     {
-        var client = new HttpClient();
-        var response = await client.GetStringAsync(CommandsUrl, cancellationToken);
-
+        using var client = new HttpClient();
+        var response = await client.GetStringAsync(uri, cancellationToken).ConfigureAwait(true);
         var rawHtml = new HtmlDocument();
         rawHtml.LoadHtml(response);
 
-        var nodes = rawHtml.DocumentNode.SelectNodes("//li[not(contains(@class, 'bohemia-header-nav-item'))]")
-		    .ToList();
+        var nodes = rawHtml.DocumentNode.SelectNodes("//div[contains(@id, 'mw-pages')]//li[not(contains(@class, 'bohemia-header-nav-item'))]");
 
-        var commands = nodes.Where(node => node.InnerHtml.Trim() != string.Empty
-                && !node.InnerText.Any(n => Filter.Contains(n))
-                && !char.IsUpper(node.InnerText.FirstOrDefault()))
-            .Select(node => node.InnerText.Trim())
-            .ToList();
+        var commands = nodes.Where(node => !string.IsNullOrEmpty(node.InnerHtml.Trim())
+            && !Filter.Contains(node.InnerText))
+        .Select(node => node.InnerText.Trim().Replace(' ', '_'))
+        .ToList();
 
         return commands;
     }

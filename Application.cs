@@ -1,11 +1,19 @@
-﻿namespace BundleARMACommands;
+﻿using BundleARMACommands;
 
-internal class Application
+internal class Program
 {
-    static async Task Main()
+    private static async Task Main(string[] args)
     {
         Console.WriteLine("Starting ARMA Command Bundler");
-        var x = await Scraper.GetRawData(CancellationToken.None);
-        x.ForEach(Console.WriteLine);
+
+        var commands = new List<string>();
+
+        foreach (var uri in Scraper.UrisToScrape)
+        {
+            commands = await Scraper.GetRawData(uri, CancellationToken.None).ConfigureAwait(true);
+            commands.ForEach(Console.WriteLine);
+        }
+
+        await Writer.WriteToXML(commands, args[0]).ConfigureAwait(true);
     }
 }

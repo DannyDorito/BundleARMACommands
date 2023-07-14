@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BundleARMACommands": {
+      "commandName": "Project",
+      "commandLineArgs": "\"F:\\GitHub\\npp-sqf\\autocompletion\\SQF.xml\""
+    }
+  }
+}
