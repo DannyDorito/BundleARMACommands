@@ -1,19 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
+﻿using System.Collections.ObjectModel;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace BundleARMACommands;
 
 public static class Writer
 {
 
-    public static async Task WriteToXML(List<string> commands, string file)
+    public static void WriteToXML(ReadOnlyCollection<string> commands, string file)
     {
+        if (commands is null)
+        {
+            throw new ArgumentNullException(nameof(commands));
+        }
+
+        if (string.IsNullOrEmpty(file))
+        {
+            throw new ArgumentException($"'{nameof(file)}' cannot be null or empty.", nameof(file));
+        }
+
         EncodingProvider ppp = CodePagesEncodingProvider.Instance;
         Encoding.RegisterProvider(ppp);
 
@@ -28,7 +33,8 @@ public static class Writer
             myData.Load(reader);
 
             var x = myData.ChildNodes[1]!.ChildNodes[0]!;
-            foreach ( XmlNode x2 in x.ChildNodes) {
+            foreach (XmlNode x2 in x.ChildNodes)
+            {
                 if (x2.Name != "Environment")
                 {
                     existingKeyWords.Add(x2.Attributes?.GetNamedItem("name")?.Value!);
