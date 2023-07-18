@@ -14,33 +14,31 @@ public static class Writer
 
     public static async Task WriteToXML(List<string> commands, string file)
     {
-        System.Text.EncodingProvider ppp = System.Text.CodePagesEncodingProvider.Instance;
+        EncodingProvider ppp = CodePagesEncodingProvider.Instance;
         Encoding.RegisterProvider(ppp);
 
-        var keyWords = new List<string>();
-
+        var existingKeyWords = new List<string>();
         var readerSettings = new XmlReaderSettings
         {
             IgnoreComments = true
         };
-        using (XmlReader reader = XmlReader.Create(file, readerSettings))
+        using (var reader = XmlReader.Create(file, readerSettings))
         {
             var myData = new XmlDocument();
             myData.Load(reader);
 
-            var x = myData.ChildNodes;
-            foreach ( var x2 in x) {
-                var xx = x2.ToString();
+            var x = myData.ChildNodes[1]!.ChildNodes[0]!;
+            foreach ( XmlNode x2 in x.ChildNodes) {
+                if (x2.Name != "Environment")
+                {
+                    existingKeyWords.Add(x2.Attributes?.GetNamedItem("name")?.Value!);
+                }
             }
-            // etc...
         }
 
-        //foreach (XElement level1Element in XElement.Load(file, readerSettings).Elements("NotepadPlus"))
-        //{
-        //    keyWords.Add(level1Element.Attribute("name").Value);
-        //}
+        var toWrite = commands.Where(c => !existingKeyWords.Any(kw => c != kw)).ToList();
 
-        var toWrite = commands.Where(c => !keyWords.Any(kw => c != kw)).ToList();
+        using XmlWriter writer = XmlWriter.Create(file, new XmlWriterSettings { });
 
     }
 }
