@@ -4,9 +4,9 @@ Console.WriteLine(value: "Starting ARMA Command Bundler");
 
 var commands = new List<string>();
 
-foreach (var uri in Scraper.UrisToScrape)
+for (int uriIndex = 0; uriIndex < Scraper.UrisToScrape.Length; uriIndex++)
 {
-    commands.AddRange(await Scraper.GetRawData(uri, CancellationToken.None).ConfigureAwait(true));
+    commands.AddRange(await Scraper.GetRawData(Scraper.UrisToScrape[uriIndex], CancellationToken.None, uriIndex == 0).ConfigureAwait(true));
 }
 
 commands.Sort(StringComparer.OrdinalIgnoreCase);
@@ -15,7 +15,7 @@ var hackyCommands = new List<string>();
 
 foreach (var c in commands)
 {
-    hackyCommands.Add($"<KeyWord name=\"{c}\" />");
+    hackyCommands.Add($"\t\t<KeyWord name=\"{c}\" />");
 }
 
 var hackyCommandsStr = string.Join("\r\n", hackyCommands);
