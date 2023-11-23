@@ -6,8 +6,7 @@ namespace BundleARMACommands;
 
 public static class Writer
 {
-
-    public static void WriteToXML(ReadOnlyCollection<string> commands, string file)
+    public static void WriteToXML(List<string> commands, string file)
     {
         if (commands is null)
         {
@@ -23,28 +22,37 @@ public static class Writer
         Encoding.RegisterProvider(ppp);
 
         var existingKeyWords = new List<string>();
-        var readerSettings = new XmlReaderSettings
-        {
-            IgnoreComments = true
-        };
-        using (var reader = XmlReader.Create(file, readerSettings))
-        {
-            var myData = new XmlDocument();
-            myData.Load(reader);
-
-            var x = myData.ChildNodes[1]!.ChildNodes[0]!;
-            foreach (XmlNode x2 in x.ChildNodes)
-            {
-                if (x2.Name != "Environment")
-                {
-                    existingKeyWords.Add(x2.Attributes?.GetNamedItem("name")?.Value!);
-                }
-            }
-        }
 
         var toWrite = commands.Where(c => !existingKeyWords.Any(kw => c != kw)).ToList();
 
-        using XmlWriter writer = XmlWriter.Create(file, new XmlWriterSettings { });
+        var fileToWrite = File.ReadAllLines(file).ToList();
 
+        var start = fileToWrite.FindIndex(f => f.StartsWith("\t\t<KeyWord name=\"", StringComparison.Ordinal));
+        var end = fileToWrite.FindLastIndex(f => f.StartsWith("\t\t<KeyWord name=\"", StringComparison.Ordinal));
+
+        fileToWrite.RemoveRange(start, end - start + 1);
+
+        fileToWrite.InsertRange(start, commands);
+
+        File.WriteAllLines(file, fileToWrite);
+    }
+
+    [Obsolete]
+    public static void WriteHacky(List<string> commands)
+    {
+        if (commands is null)
+        {
+            throw new ArgumentNullException(nameof(commands));
+        }
+        var hackyCommands = new List<string>();
+
+        foreach (var c in commands)
+        {
+            hackyCommands.Add($"\t\t<KeyWord name=\"{c}\" />");
+        }
+
+        var hackyCommandsStr = string.Join("\r\n", hackyCommands);
+
+        File.WriteAllText(@$"{Environment.CurrentDirectory}\output.xml", hackyCommandsStr);
     }
 }
