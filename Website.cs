@@ -1,17 +1,11 @@
 ﻿namespace BundleARMACommands;
 
-public class Website
+public class Website(Uri uri, WebsiteType siteType)
 {
-    public Uri Uri { get; set; }
-    public WebsiteType SiteType { get; set; }
+    public Uri Uri { get; set; } = uri;
+    public WebsiteType SiteType { get; set; } = siteType;
 
     public bool Prepend => SiteType == WebsiteType.Commands;
-
-    public Website(Uri uri, WebsiteType siteType)
-    {
-        Uri = uri;
-        SiteType = siteType;
-    }
 
     public string XPath()
     {

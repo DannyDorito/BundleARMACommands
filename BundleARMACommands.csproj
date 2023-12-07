@@ -2,10 +2,12 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AnalysisLevel>6.0-all</AnalysisLevel>
+    <PublishAot>True</PublishAot>
+    <RepositoryUrl>https://github.com/DannyDorito/BundleARMACommands</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
