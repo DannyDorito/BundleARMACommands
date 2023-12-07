@@ -1,20 +1,19 @@
 ﻿using HtmlAgilityPack;
 using System.Collections.ObjectModel;
-using System.Threading;
 
 namespace BundleARMACommands;
 
 public static class Scraper
 {
-    public static readonly Collection<Website> WebsitesToScrape = new()
-    {
+    public static readonly Collection<Website> WebsitesToScrape =
+    [
         new Website(new("https://community.bistudio.com/wiki/Category:Scripting_Commands"), WebsiteType.Commands),
         new Website(new("https://community.bistudio.com/wiki/Category:Functions"), WebsiteType.Functions),
         new Website(new("https://cbateam.github.io/CBA_A3/docs/index/Functions.html"), WebsiteType.CBA)
-    };
+    ];
 
-    private static readonly string[] Filter = { "a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-" };  
-    private static readonly Collection<string> Prepend = new() { "_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y" };
+    private static readonly Collection<string> Filter = ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];  
+    private static readonly Collection<string> Prepend = ["_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y"];
 
     private const string CBAAppend = "CBA_fnc_";
 

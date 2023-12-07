@@ -8,6 +8,20 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
     <PublishAot>True</PublishAot>
     <RepositoryUrl>https://github.com/DannyDorito/BundleARMACommands</RepositoryUrl>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+    <Trimming>full</Trimming>
+    <Title>Bundle ARMA Commands</Title>
+    <Authors>John Allison</Authors>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
   </PropertyGroup>
 
   <ItemGroup>

@@ -38,7 +38,7 @@ public static class Writer
         end = file.FindLastIndex(line => line.StartsWith(KeywordPrepend, StringComparison.Ordinal));
 
         if (start == -1 || end == -1)
-            throw new ArgumentException("Error: Could not find start and end of keywords in file", nameof(path));
+            throw new ArgumentException("Error: Could not find start and end of keywords in file.", nameof(path));
 
         return file;
     }
