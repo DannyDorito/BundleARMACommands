@@ -1,10 +1,12 @@
 ﻿using HtmlAgilityPack;
+using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace BundleARMACommands;
 
 public static class Scraper
 {
-    public static readonly List<Website> WebsitesToScrape = new()
+    public static readonly Collection<Website> WebsitesToScrape = new()
     {
         new Website(new("https://community.bistudio.com/wiki/Category:Scripting_Commands"), WebsiteType.Commands),
         new Website(new("https://community.bistudio.com/wiki/Category:Functions"), WebsiteType.Functions),
@@ -12,7 +14,7 @@ public static class Scraper
     };
 
     private static readonly string[] Filter = { "a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-" };  
-    private static readonly List<string> Prepend = new() { "_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y" };
+    private static readonly Collection<string> Prepend = new() { "_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y" };
 
     private const string CBAAppend = "CBA_fnc_";
 
@@ -20,20 +22,7 @@ public static class Scraper
     {
         var returnCommands = new List<string>();
 
-        if (website is null)
-            throw new ArgumentNullException(nameof(website));
-
-        using var client = new HttpClient();
-        var response = await client.GetStringAsync(website.Uri, cancellationToken).ConfigureAwait(true);
-        var rawHtml = new HtmlDocument();
-        rawHtml.LoadHtml(response);
-
-        var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath());
-
-        var commands = nodes.Where(node => !string.IsNullOrEmpty(node.InnerHtml.Trim())
-            && !Filter.Contains(node.InnerText))
-        .Select(node => node.InnerText.Trim().Replace(' ', '_'))
-        .ToList();
+        var commands = await GetRawData(website, cancellationToken).ConfigureAwait(true);
 
         if (website.Prepend)
         {
@@ -59,5 +48,25 @@ public static class Scraper
         }
 
         return returnCommands;
+    }
+
+    private static async Task<List<string>> GetRawData(Website website, CancellationToken cancellationToken)
+    {
+        if (website is null)
+            throw new ArgumentNullException(nameof(website));
+
+        using var client = new HttpClient();
+        var response = await client.GetStringAsync(website.Uri, cancellationToken).ConfigureAwait(true);
+        var rawHtml = new HtmlDocument();
+        rawHtml.LoadHtml(response);
+
+        var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath());
+
+        var commands = nodes.Where(node => !string.IsNullOrEmpty(node.InnerHtml.Trim())
+            && !Filter.Contains(node.InnerText))
+        .Select(node => node.InnerText.Trim().Replace(' ', '_'))
+        .ToList();
+
+        return commands;
     }
 }

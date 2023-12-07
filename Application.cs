@@ -1,6 +1,5 @@
 ﻿using BundleARMACommands;
 
-
 Console.WriteLine("Starting ARMA Command Bundler");
 
 var commands = new List<string>();
@@ -10,6 +9,7 @@ foreach (var website in Scraper.WebsitesToScrape)
 
 commands.Sort(StringComparer.OrdinalIgnoreCase);
 
+Console.WriteLine($"{commands.Count} commands found");
 
 if (args.Length != 1)
     throw new ArgumentNullException(nameof(args));
