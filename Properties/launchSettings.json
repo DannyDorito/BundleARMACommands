@@ -2,7 +2,7 @@
   "profiles": {
     "BundleARMACommands": {
       "commandName": "Project",
-      "commandLineArgs": "\"F:\\GitHub\\BundleARMACommands\\SQF.xml\""
+      "commandLineArgs": "\"john@jallison.co.uk\""
     }
   }
 }

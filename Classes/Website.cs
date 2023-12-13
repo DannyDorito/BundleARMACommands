@@ -1,4 +1,4 @@
-﻿namespace BundleARMACommands;
+﻿namespace BundleARMACommands.Classes;
 
 public class Website(Uri uri, WebsiteType siteType)
 {
