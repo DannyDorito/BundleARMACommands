@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundleARMACommands", "BundleARMACommands.csproj", "{58F1A002-7602-47F3-85B0-CEE8E077BD79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BundleARMACommands", "BundleARMACommands.csproj", "{58F1A002-7602-47F3-85B0-CEE8E077BD79}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BundleARMACommandsTests", "..\BundleARMACommandsTests\BundleARMACommandsTests.csproj", "{83FA2399-C650-44EB-B38C-29397D6C0E46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{58F1A002-7602-47F3-85B0-CEE8E077BD79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{58F1A002-7602-47F3-85B0-CEE8E077BD79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{58F1A002-7602-47F3-85B0-CEE8E077BD79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83FA2399-C650-44EB-B38C-29397D6C0E46}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83FA2399-C650-44EB-B38C-29397D6C0E46}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83FA2399-C650-44EB-B38C-29397D6C0E46}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83FA2399-C650-44EB-B38C-29397D6C0E46}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

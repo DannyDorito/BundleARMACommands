@@ -27,13 +27,13 @@ public static class Writer
         Console.WriteLine($"Changed {finalCommands.Count - (end - start + 1)} lines");
     }
 
-    private static List<string> ReadXML(string path, out int start, out int end)
+    public static List<string> ReadXML(string path, out int start, out int end)
     {
         if (string.IsNullOrEmpty(path))
             throw new ArgumentException($"File cannot be null or empty.", nameof(path));
 
         var file = File.ReadAllLines(path).ToList();
-        
+
         start = file.FindIndex(line => line.StartsWith(KeywordPrepend, StringComparison.Ordinal));
         end = file.FindLastIndex(line => line.StartsWith(KeywordPrepend, StringComparison.Ordinal));
 

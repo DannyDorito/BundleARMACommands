@@ -13,7 +13,7 @@ public static class Scraper
         new Website(new("https://cbateam.github.io/CBA_A3/docs/index/Functions.html"), WebsiteType.CBA)
     ];
 
-    private static readonly Collection<string> Filter = ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];  
+    private static readonly Collection<string> Filter = ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];
     private static readonly Collection<string> Prepend = ["_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y"];
 
     private const string CBAAppend = "CBA_fnc_";
@@ -29,22 +29,17 @@ public static class Scraper
             commands.AddRange(Prepend);
         }
 
-        switch (website.SiteType)
+        if (website.SiteType == WebsiteType.CBA)
         {
-            case WebsiteType.CBA:
-                {
-                    foreach (var command in commands)
-                    {
-                        var cbaCommand = $"{CBAAppend}{command}";
-                        returnCommands.Add(cbaCommand);
-                    }
-
-                    break;
-                }
-
-            default:
-                returnCommands.AddRange(commands);
-                break;
+            foreach (var command in commands)
+            {
+                var cbaCommand = $"{CBAAppend}{command}";
+                returnCommands.Add(cbaCommand);
+            }
+        }
+        else
+        {
+            returnCommands.AddRange(commands);
         }
 
         return returnCommands;
@@ -60,13 +55,13 @@ public static class Scraper
         var rawHtml = new HtmlDocument();
         rawHtml.LoadHtml(response);
 
-        var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath());
+        var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath) ??
+            throw new ArgumentOutOfRangeException($"Error: No nodes found for '{website.SiteType}'");
 
-        var commands = nodes.Where(node => !string.IsNullOrEmpty(node.InnerHtml.Trim())
-            && !Filter.Contains(node.InnerText))
-        .Select(node => node.InnerText.Trim().Replace(' ', '_'))
-        .ToList();
+        var commands = nodes.Where(node => !Filter.Contains(node.InnerText))
+            .Select(node => node.InnerText.Trim().Replace(' ', '_'))
+            .ToList();
 
-        return commands;
+        return commands is not null ? commands : throw new ArgumentOutOfRangeException($"Error: No commands found for '{website.SiteType}'");
     }
 }

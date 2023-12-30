@@ -8,7 +8,7 @@
     <AnalysisLevel>6.0-all</AnalysisLevel>
     <PublishAot>True</PublishAot>
     <RepositoryUrl>https://github.com/DannyDorito/BundleARMACommands</RepositoryUrl>
-    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+    <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <Trimming>full</Trimming>
     <Title>Bundle ARMA Commands</Title>
     <Authors>John Allison</Authors>
