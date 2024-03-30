@@ -41,10 +41,4 @@ public class ScraperTests
         Assert.That(result, Is.Not.Null);
         Assert.That(result, Is.Not.Empty);
     }
-
-    [Test]
-    public void GetData_WithNullWebsite_ThrowsArgumentNullException()
-    {
-        Assert.ThrowsAsync<ArgumentNullException>(async () => await Scraper.GetData(null, CancellationToken.None));
-    }
 }

@@ -50,6 +50,8 @@ public static class Scraper
         if (website is null)
             throw new ArgumentNullException(nameof(website));
 
+        Console.WriteLine($"Getting raw data for: {website.Uri}");
+
         using var client = new HttpClient();
         var response = await client.GetStringAsync(website.Uri, cancellationToken).ConfigureAwait(true);
         var rawHtml = new HtmlDocument();

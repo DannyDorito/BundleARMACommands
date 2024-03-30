@@ -4,7 +4,7 @@ public static class Writer
 {
     private const string KeywordPrepend = "\t\t<KeyWord name=\"";
     private const string KeywordAppend = "\" />";
-    public static void WriteToXML(List<string> commands, string path)
+    public static bool WriteToXML(List<string> commands, string path)
     {
         if (commands is null)
             throw new ArgumentNullException(nameof(commands));
@@ -25,6 +25,7 @@ public static class Writer
             File.WriteAllLines(path, file);
         }
         Console.WriteLine($"Changed {finalCommands.Count - (end - start + 1)} lines");
+        return hasChanged;
     }
 
     public static List<string> ReadXML(string path, out int start, out int end)

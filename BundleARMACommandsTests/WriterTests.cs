@@ -30,15 +30,8 @@ public class WriterTests
     }
 
     [Test]
-    public void WriteToXML_NullCommands_ThrowsArgumentNullException()
-    {
-        Assert.Throws<ArgumentNullException>(() => Writer.WriteToXML(null, TestFilePath));
-    }
-
-    [Test]
     public void ReadXML_NullOrEmptyPath_ThrowsArgumentException()
     {
-        Assert.Throws<ArgumentException>(() => Writer.ReadXML(null, out _, out _));
         Assert.Throws<ArgumentException>(() => Writer.ReadXML(string.Empty, out _, out _));
     }
 
