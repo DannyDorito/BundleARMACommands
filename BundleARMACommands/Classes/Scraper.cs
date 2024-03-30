@@ -26,11 +26,13 @@ public static class Scraper
 
         if (website.Prepend)
         {
+            Console.WriteLine($"Website type: '{website.SiteType}' has prepend enabled, adding prepend list to existing commands");
             commands.AddRange(Prepend);
         }
 
         if (website.SiteType == WebsiteType.CBA)
         {
+            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {CBAAppend} to command name");
             foreach (var command in commands)
             {
                 var cbaCommand = $"{CBAAppend}{command}";
@@ -63,6 +65,8 @@ public static class Scraper
         var commands = nodes.Where(node => !Filter.Contains(node.InnerText))
             .Select(node => node.InnerText.Trim().Replace(' ', '_'))
             .ToList();
+
+        Console.WriteLine($"Found {commands.Count} commands in {website.Uri}");
 
         return commands is not null ? commands : throw new ArgumentOutOfRangeException($"Error: No commands found for '{website.SiteType}'");
     }
