@@ -16,8 +16,6 @@ public static class Writer
         var finalCommands = new List<string>();
         var file = ReadXML(path, out var start, out var end);
 
-        Console.WriteLine($"Found {file.Count} commands");
-
         Console.WriteLine($"Writing {finalCommands.Count} to '{path}'");
 
         foreach (var command in commands)
