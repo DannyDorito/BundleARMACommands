@@ -22,8 +22,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ../BundleARMACommands
+      working-directory: ./BundleARMACommands
     - name: Build
-      run: dotnet build BundleARMACommands.sln --no-restore
+      run: dotnet build ./BundleARMACommands/BundleARMACommands.sln --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
