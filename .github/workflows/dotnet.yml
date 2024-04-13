@@ -27,5 +27,5 @@ jobs:
       run: dotnet build BundleARMACommands.sln --no-restore
       working-directory: ./BundleARMACommands
     - name: Test
-      run: dotnet test ./BundleARMACommands/--no-build --verbosity normal
+      run: dotnet test BundleARMACommands.sln --no-build --verbosity normal
       working-directory: ./BundleARMACommands
