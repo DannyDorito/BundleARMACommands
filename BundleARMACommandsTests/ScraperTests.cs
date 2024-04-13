@@ -22,23 +22,38 @@ public class ScraperTests
     public async Task GetData_WithCommandsWebsite_ReturnsData()
     {
         var result = await Scraper.GetData(_websiteCommands, CancellationToken.None);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result, Is.Not.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
+        });
+    }
+
+    [Test]
+    public void GetData_WebsiteNull_ThrowsException()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(async () => await Scraper.GetData(null, CancellationToken.None));
     }
 
     [Test]
     public async Task GetData_WithFunctionsWebsite_ReturnsData()
     {
         var result = await Scraper.GetData(_websiteFunctions, CancellationToken.None);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result, Is.Not.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
+        });
     }
 
     [Test]
     public async Task GetData_WithCBAWebsite_ReturnsData()
     {
         var result = await Scraper.GetData(_websiteCBA, CancellationToken.None);
-        Assert.That(result, Is.Not.Null);
-        Assert.That(result, Is.Not.Empty);
+        Assert.Multiple(() =>
+        {
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result, Is.Not.Empty);
+        });
     }
 }

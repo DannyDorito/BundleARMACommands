@@ -18,7 +18,7 @@ public static class Scraper
 
     private const string CBAAppend = "CBA_fnc_";
 
-    public static async Task<List<string>> GetData(Website website, CancellationToken cancellationToken)
+    public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
         var returnCommands = new List<string>();
 
@@ -47,7 +47,7 @@ public static class Scraper
         return returnCommands;
     }
 
-    private static async Task<List<string>> GetRawData(Website website, CancellationToken cancellationToken)
+    private static async Task<List<string>> GetRawData(Website? website, CancellationToken cancellationToken)
     {
         if (website is null)
             throw new ArgumentNullException(nameof(website));

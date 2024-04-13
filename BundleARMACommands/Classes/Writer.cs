@@ -5,7 +5,7 @@ public static class Writer
     private const string KeywordPrepend = "\t\t<KeyWord name=\"";
     private const string KeywordAppend = "\" />";
 #pragma warning disable CA1002 // Do not expose generic lists
-    public static bool WriteToXML(List<string> commands, string path)
+    public static bool WriteToXML(List<string>? commands, string path)
 #pragma warning restore CA1002 // Do not expose generic lists
     {
         if (commands is null)

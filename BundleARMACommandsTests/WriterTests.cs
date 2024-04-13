@@ -39,10 +39,10 @@ public class WriterTests
     public void ReadXML_ValidPath_ReturnsFileLines()
     {
         var fileLines = Writer.ReadXML(TestFilePath, out var start, out var end);
-
-        Assert.That(start, Is.EqualTo(1));
+      
         Assert.Multiple(() =>
         {
+            Assert.That(start, Is.EqualTo(1));
             Assert.That(end, Is.EqualTo(2));
             Assert.That(fileLines, Has.Count.EqualTo(4));
         });
@@ -55,5 +55,28 @@ public class WriterTests
         File.WriteAllLines(TestFilePath, new List<string> { "<root>", "</root>" });
 
         Assert.Throws<ArgumentException>(() => Writer.ReadXML(TestFilePath, out _, out _));
+    }
+
+    [Test]
+    public void WriteXML_NullCommands()
+    {
+        Assert.Throws<ArgumentNullException>(() => Writer.WriteToXML(null, ""));
+    }
+
+    [Test]
+    public void Write_XML()
+    {
+        var commands = new List<string>() { "Test" };
+        var result = Writer.WriteToXML(commands, TestFilePath);
+
+        Assert.That(result, Is.EqualTo(true));
+    }
+
+    [Test]
+    public void Write_XML_EmptyCommands()
+    {
+        var result = Writer.WriteToXML([], TestFilePath);
+
+        Assert.That(result, Is.EqualTo(true));
     }
 }
