@@ -1,12 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BundleARMACommands;
 
-namespace BundleARMACommandsTests
+namespace BundleARMACommandsTests;
+
+[TestFixture]
+public class CommitTests
 {
-    internal class CommitTests
+    [Test]
+    public void PushToNppRepo()
     {
+        Assert.DoesNotThrowAsync(() => Commit.PushToNppRepo("repo/location"));
+    }
+
+    [Test]
+    public void PushToNppRepo_RepoNull()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToNppRepo(""));
+    }
+
+    [Test]
+    public void PushToNppRepo_DriveLetterNull()
+    {
+        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToNppRepo("repo/location", ""));
     }
 }

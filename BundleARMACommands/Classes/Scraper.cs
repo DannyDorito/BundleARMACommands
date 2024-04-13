@@ -20,6 +20,9 @@ public static class Scraper
 
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
+        if (website == null)
+            throw new ArgumentNullException(nameof(website));
+
         var returnCommands = new List<string>();
 
         var commands = await GetRawData(website, cancellationToken).ConfigureAwait(true);
@@ -47,11 +50,8 @@ public static class Scraper
         return returnCommands;
     }
 
-    private static async Task<List<string>> GetRawData(Website? website, CancellationToken cancellationToken)
+    private static async Task<List<string>> GetRawData(Website website, CancellationToken cancellationToken)
     {
-        if (website is null)
-            throw new ArgumentNullException(nameof(website));
-
         Console.WriteLine($"Getting raw data for: {website.Uri}");
 
         using var client = new HttpClient();
