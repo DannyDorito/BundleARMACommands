@@ -1,4 +1,5 @@
 using BundleARMACommands.Classes;
+using BundleARMACommands.Enums;
 
 namespace BundleARMACommandsTests;
 
@@ -10,7 +11,7 @@ public class WebsiteTests
     [SetUp]
     public void Setup()
     {
-        _website = new Website(new Uri("http://example.com"), WebsiteType.Commands);
+        _website = new Website(new Uri("https://example.com"), WebsiteType.Commands);
     }
 
     [Test]
@@ -18,7 +19,7 @@ public class WebsiteTests
     {
         Assert.Multiple(() =>
         {
-            Assert.That(_website.Uri, Is.EqualTo(new Uri("http://example.com")));
+            Assert.That(_website.Uri, Is.EqualTo(new Uri("https://example.com")));
             Assert.That(_website.SiteType, Is.EqualTo(WebsiteType.Commands));
         });
     }

@@ -1,4 +1,4 @@
-﻿using BundleARMACommands;
+﻿using BundleARMACommands.Actions;
 
 namespace BundleARMACommandsTests;
 

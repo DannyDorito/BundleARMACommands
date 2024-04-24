@@ -1,25 +1,34 @@
-﻿namespace BundleARMACommands;
+﻿using BundleARMACommands.Enums;
+
+namespace BundleARMACommands.Actions;
 
 public static class Writer
 {
-    private const string KeywordPrepend = "\t\t<KeyWord name=\"";
-    private const string KeywordAppend = "\" />";
-#pragma warning disable CA1002 // Do not expose generic lists
-    public static bool WriteToXML(List<string>? commands, string path)
-#pragma warning restore CA1002 // Do not expose generic lists
+    public static bool WriteXML(List<string> commands, string path, WriteType writingTo)
     {
         if (commands is null)
             throw new ArgumentNullException(nameof(commands));
 
+        return writingTo switch
+        {
+            WriteType.AutoComplete => WriteAutoComplete(commands, path),
+            WriteType.SyntaxHighlighting => WriteSyntaxHiglighting(commands, path),
+            _ => false,
+        };
+    }
+
+    public static bool WriteAutoComplete(List<string>? commands, string path)
+    {
+        if (commands is null)
+            throw new ArgumentNullException(nameof(commands));
+
+        var finalCommands = Scraper.FinaliseCommands(commands, path);
+
         Console.WriteLine($"Reading existing .xml file from '{path}'");
 
-        var finalCommands = new List<string>();
         var file = ReadXML(path, out var start, out var end);
 
         Console.WriteLine($"Writing {finalCommands.Count} to '{path}'");
-
-        foreach (var command in commands)
-            finalCommands.Add($"{KeywordPrepend}{command}{KeywordAppend}");
 
         var hasChanged = end - start + 1 != finalCommands.Count;
 
@@ -34,17 +43,24 @@ public static class Writer
         return hasChanged;
     }
 
-#pragma warning disable CA1002 // Do not expose generic lists
+    public static bool WriteSyntaxHiglighting(List<string>? commands, string path)
+    {
+        if (commands is null)
+            throw new ArgumentNullException(nameof(commands));
+
+        Console.WriteLine($"Reading existing .xml file from '{path}'");
+        return true;
+    }
+
     public static List<string> ReadXML(string path, out int start, out int end)
-#pragma warning restore CA1002 // Do not expose generic lists
     {
         if (string.IsNullOrEmpty(path))
             throw new ArgumentException($"File cannot be null or empty.", nameof(path));
 
         var file = File.ReadAllLines(path).ToList();
 
-        start = file.FindIndex(line => line.StartsWith(KeywordPrepend, StringComparison.Ordinal));
-        end = file.FindLastIndex(line => line.StartsWith(KeywordPrepend, StringComparison.Ordinal));
+        start = file.FindIndex(line => line.StartsWith(Scraper.KeywordPrepend, StringComparison.Ordinal));
+        end = file.FindLastIndex(line => line.StartsWith(Scraper.KeywordPrepend, StringComparison.Ordinal));
 
         if (start == -1 || end == -1)
             throw new ArgumentException("Error: Could not find start and end of keywords in file.", nameof(path));

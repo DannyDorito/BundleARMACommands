@@ -1,8 +1,9 @@
 ﻿using BundleARMACommands.Classes;
+using BundleARMACommands.Enums;
 using HtmlAgilityPack;
 using System.Collections.ObjectModel;
 
-namespace BundleARMACommands;
+namespace BundleARMACommands.Actions;
 
 public static class Scraper
 {
@@ -17,6 +18,9 @@ public static class Scraper
     private static readonly Collection<string> Prepend = ["_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y"];
 
     private const string CBAAppend = "CBA_fnc_";
+
+    public const string KeywordPrepend = "\t\t<KeyWord name=\"";
+    public const string KeywordAppend = "\" />";
 
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
@@ -48,6 +52,19 @@ public static class Scraper
         }
 
         return returnCommands;
+    }
+
+    public static List<string> FinaliseCommands(ICollection<string> commands, string path)
+    {
+        if (commands is null)
+            throw new ArgumentNullException(nameof(commands));
+
+        var finalCommands = new List<string>();
+
+        foreach (var command in commands)
+            finalCommands.Add($"{KeywordPrepend}{command}{KeywordAppend}");
+
+        return finalCommands;
     }
 
     private static async Task<List<string>> GetRawData(Website website, CancellationToken cancellationToken)

@@ -1,4 +1,6 @@
-﻿namespace BundleARMACommands.Classes;
+﻿using BundleARMACommands.Enums;
+
+namespace BundleARMACommands.Classes;
 
 public class Website(Uri uri, WebsiteType siteType)
 {
@@ -14,11 +16,4 @@ public class Website(Uri uri, WebsiteType siteType)
         WebsiteType.CBA => "//td[@class='IEntry']",
         _ => string.Empty,
     };
-}
-
-public enum WebsiteType
-{
-    Commands,
-    Functions,
-    CBA
 }

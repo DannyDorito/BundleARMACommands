@@ -1,4 +1,5 @@
-﻿using BundleARMACommands;
+﻿using BundleARMACommands.Actions;
+using BundleARMACommands.Enums;
 using System.Diagnostics.CodeAnalysis;
 
 [ExcludeFromCodeCoverage]
@@ -22,7 +23,7 @@ internal class Program
 
         Console.WriteLine($"{commands.Count} commands found.");
 
-        var changed = Writer.WriteToXML(commands, args.ElementAt(0));
+        var changed = Writer.WriteXML(commands, args.ElementAt(0), WriteType.AutoComplete);
 
         if (changed)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 
-namespace BundleARMACommands;
+namespace BundleARMACommands.Actions;
 
 public static class Commit
 {

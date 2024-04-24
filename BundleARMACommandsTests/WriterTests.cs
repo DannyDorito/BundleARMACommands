@@ -1,4 +1,4 @@
-using BundleARMACommands;
+using BundleARMACommands.Actions;
 
 namespace BundleARMACommandsTests;
 
@@ -60,14 +60,14 @@ public class WriterTests
     [Test]
     public void WriteXML_NullCommands()
     {
-        Assert.Throws<ArgumentNullException>(() => Writer.WriteToXML(null, ""));
+        Assert.Throws<ArgumentNullException>(() => Writer.WriteAutoComplete(null, ""));
     }
 
     [Test]
     public void Write_XML()
     {
         var commands = new List<string>() { "Test" };
-        var result = Writer.WriteToXML(commands, TestFilePath);
+        var result = Writer.WriteAutoComplete(commands, TestFilePath);
 
         Assert.That(result, Is.EqualTo(true));
     }
@@ -75,7 +75,7 @@ public class WriterTests
     [Test]
     public void Write_XML_EmptyCommands()
     {
-        var result = Writer.WriteToXML([], TestFilePath);
+        var result = Writer.WriteAutoComplete([], TestFilePath);
 
         Assert.That(result, Is.EqualTo(true));
     }
