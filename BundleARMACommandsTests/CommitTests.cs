@@ -6,20 +6,20 @@ namespace BundleARMACommandsTests;
 public class CommitTests
 {
     [Test]
-    public void PushToNppRepo()
+    public void PushToNpp()
     {
-        Assert.DoesNotThrowAsync(() => Commit.PushToNppRepo("repo/location"));
+        Assert.DoesNotThrowAsync(() => Commit.PushToRepo("F:\\GitHub\\npp-sqf", CancellationToken.None));
     }
 
     [Test]
-    public void PushToNppRepo_RepoNull()
+    public void PushToNpp_RepoNull()
     {
-        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToNppRepo(""));
+        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToRepo("", CancellationToken.None));
     }
 
     [Test]
-    public void PushToNppRepo_DriveLetterNull()
+    public void PushToNpp_RepoNotExists()
     {
-        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToNppRepo("repo/location", ""));
+        Assert.ThrowsAsync<DirectoryNotFoundException>(() => Commit.PushToRepo("repo/location", CancellationToken.None));
     }
 }

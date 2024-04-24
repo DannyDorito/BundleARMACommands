@@ -9,7 +9,7 @@ internal class Program
     {
         Console.WriteLine($"Starting {typeof(Program).Assembly.GetName().Name}.");
 
-        if (args.Length != 3)
+        if (args.Length != 2)
             throw new ArgumentNullException(nameof(args));
 
         var commands = new List<string>();
@@ -27,8 +27,8 @@ internal class Program
 
         if (changed)
         {
-            await Commit.PushToNppRepo(args.ElementAt(2), args.ElementAt(1)).ConfigureAwait(true);
-            Console.WriteLine($"Pushed Changes to {args.ElementAt(2)} repo.");
+            await Commit.PushToRepo(args.ElementAt(1), CancellationToken.None).ConfigureAwait(true);
+            Console.WriteLine($"Pushed Changes to {args.ElementAt(1)} repo.");
         }
 
         Console.WriteLine($"{(!changed ? "No changes found, " : "")}Exiting {typeof(Program).Assembly.GetName().Name}.");
