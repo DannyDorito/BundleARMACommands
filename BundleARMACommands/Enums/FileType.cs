@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BundleARMACommands.Enums
 {
-    public enum WriteType
+    public enum FileType
     {
         AutoComplete,
         SyntaxHighlighting

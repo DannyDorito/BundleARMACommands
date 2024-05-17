@@ -7,21 +7,6 @@ namespace BundleARMACommands.Actions;
 
 public static class Scraper
 {
-    public static readonly Collection<Website> WebsitesToScrape =
-    [
-        new Website(new("https://community.bistudio.com/wiki/Category:Scripting_Commands"), WebsiteType.Commands),
-        new Website(new("https://community.bistudio.com/wiki/Category:Functions"), WebsiteType.Functions),
-        new Website(new("https://cbateam.github.io/CBA_A3/docs/index/Functions.html"), WebsiteType.CBA)
-    ];
-
-    private static readonly Collection<string> Filter = ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];
-    private static readonly Collection<string> Prepend = ["_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y"];
-
-    private const string CBAAppend = "CBA_fnc_";
-
-    public const string KeywordPrepend = "\t\t<KeyWord name=\"";
-    public const string KeywordAppend = "\" />";
-
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
         if (website == null)
@@ -34,15 +19,15 @@ public static class Scraper
         if (website.Prepend)
         {
             Console.WriteLine($"Website type: '{website.SiteType}' has prepend enabled, adding prepend list to existing commands");
-            commands.AddRange(Prepend);
+            commands.AddRange(Global.Prepend);
         }
 
         if (website.SiteType == WebsiteType.CBA)
         {
-            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {CBAAppend} to command name");
+            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Global.CBAAppend} to command name");
             foreach (var command in commands)
             {
-                var cbaCommand = $"{CBAAppend}{command}";
+                var cbaCommand = $"{Global.CBAAppend}{command}";
                 returnCommands.Add(cbaCommand);
             }
         }
@@ -62,7 +47,7 @@ public static class Scraper
         var finalCommands = new List<string>();
 
         foreach (var command in commands)
-            finalCommands.Add($"{KeywordPrepend}{command}{KeywordAppend}");
+            finalCommands.Add($"{Global.KeywordPrepend}{command}{Global.KeywordAppend}");
 
         return finalCommands;
     }
@@ -79,7 +64,7 @@ public static class Scraper
         var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath) ??
             throw new ArgumentOutOfRangeException($"Error: No nodes found for '{website.SiteType}'");
 
-        var commands = nodes.Where(node => !Filter.Contains(node.InnerText))
+        var commands = nodes.Where(node => !Global.Filter.Contains(node.InnerText))
             .Select(node => node.InnerText.Trim().Replace(' ', '_'))
             .ToList();
 

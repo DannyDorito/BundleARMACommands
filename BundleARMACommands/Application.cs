@@ -1,4 +1,5 @@
 ﻿using BundleARMACommands.Actions;
+using BundleARMACommands.Classes;
 using BundleARMACommands.Enums;
 using System.Diagnostics.CodeAnalysis;
 
@@ -14,7 +15,7 @@ internal class Program
 
         var commands = new List<string>();
 
-        foreach (var website in Scraper.WebsitesToScrape)
+        foreach (var website in Global.WebsitesToScrape)
             commands.AddRange(await Scraper.GetData(website, CancellationToken.None).ConfigureAwait(true));
 
         Console.WriteLine($"Setting String Comparison to '{StringComparer.OrdinalIgnoreCase}'");
@@ -23,7 +24,7 @@ internal class Program
 
         Console.WriteLine($"{commands.Count} commands found.");
 
-        var changed = Writer.WriteXML(commands, args.ElementAt(0), WriteType.AutoComplete);
+        var changed = Writer.WriteXML(commands, args.ElementAt(0), FileType.AutoComplete);
 
         if (changed)
         {

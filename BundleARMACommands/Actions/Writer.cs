@@ -1,19 +1,33 @@
-﻿using BundleARMACommands.Enums;
+﻿using BundleARMACommands.Classes;
+using BundleARMACommands.Enums;
 
 namespace BundleARMACommands.Actions;
 
 public static class Writer
 {
-    public static bool WriteXML(List<string> commands, string path, WriteType writingTo)
+    public static bool WriteXML(List<string> commands, string path, FileType type)
     {
         if (commands is null)
             throw new ArgumentNullException(nameof(commands));
 
-        return writingTo switch
+        return type switch
         {
-            WriteType.AutoComplete => WriteAutoComplete(commands, path),
-            WriteType.SyntaxHighlighting => WriteSyntaxHiglighting(commands, path),
+            FileType.AutoComplete => WriteAutoComplete(commands, path),
+            FileType.SyntaxHighlighting => WriteSyntaxHiglighting(commands, path),
             _ => false,
+        };
+    }
+
+    public static Tuple<List<string>, int, int> ReadXml(string path, FileType type)
+    {
+        if (string.IsNullOrEmpty(path))
+            throw new ArgumentException($"File cannot be null or empty.", nameof(path));
+
+        return type switch
+        {
+            FileType.AutoComplete => ReadXmlAutoComplete(path),
+            FileType.SyntaxHighlighting => throw new NotImplementedException(),
+            _ => throw new NotImplementedException()
         };
     }
 
@@ -26,7 +40,10 @@ public static class Writer
 
         Console.WriteLine($"Reading existing .xml file from '{path}'");
 
-        var file = ReadXML(path, out var start, out var end);
+        var fileTuple = ReadXml(path, FileType.AutoComplete);
+        var file = fileTuple.Item1;
+        var start = fileTuple.Item2;
+        var end = fileTuple.Item3;
 
         Console.WriteLine($"Writing {finalCommands.Count} to '{path}'");
 
@@ -52,19 +69,21 @@ public static class Writer
         return true;
     }
 
-    public static List<string> ReadXML(string path, out int start, out int end)
+    public static Tuple<List<string>, int, int> ReadXmlAutoComplete(string path)
     {
         if (string.IsNullOrEmpty(path))
-            throw new ArgumentException($"File cannot be null or empty.", nameof(path));
+            throw new ArgumentException($"File cannot be null or empty.", path);
 
         var file = File.ReadAllLines(path).ToList();
 
-        start = file.FindIndex(line => line.StartsWith(Scraper.KeywordPrepend, StringComparison.Ordinal));
-        end = file.FindLastIndex(line => line.StartsWith(Scraper.KeywordPrepend, StringComparison.Ordinal));
+        var c = Global.KeywordPrepend;
+
+        var start = file.FindIndex(line => line.StartsWith(Global.KeywordPrepend, StringComparison.Ordinal));
+        var end = file.FindLastIndex(line => line.StartsWith(Global.KeywordPrepend, StringComparison.Ordinal));
 
         if (start == -1 || end == -1)
-            throw new ArgumentException("Error: Could not find start and end of keywords in file.", nameof(path));
+            throw new ArgumentException("Error: Could not find start and end of keywords in file.", path);
 
-        return file;
+        return Tuple.Create(file, start, end);
     }
 }
