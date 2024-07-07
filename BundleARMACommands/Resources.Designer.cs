@@ -88,7 +88,7 @@ namespace BundleARMACommands {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to a != b,! a,a != b,a % b,a &amp;&amp; b,a &amp;&amp; b,a * b,a / b,a : b,a = b,a == b,a greater b,a greater= b,a hash b,a less b,a less= b,a or b,a ^ b,+,-.
+        ///   Looks up a localized string similar to a != b,! a,a != b,a % b,a &amp;&amp; b,a * b,a / b,a : b,a = b,a == b,a greater b,a greater= b,a hash b,a less b,a less= b,a or b,a ^ b,+,-.
         /// </summary>
         public static string Filter {
             get {
