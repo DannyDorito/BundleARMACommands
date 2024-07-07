@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 
 namespace BundleARMACommands.Classes
 {
-    internal static class Global
+    public static class Common
     {
         public static readonly Collection<Website> WebsitesToScrape =
         [
@@ -28,8 +28,8 @@ namespace BundleARMACommands.Classes
 
         public static string CBAAppend => Resources.CBAAppend;
 
-        public static string KeywordPrepend = "\t\t<KeyWord name=\"";
+        public const string KeywordPrepend = "\t\t<KeyWord name=\"";
 
-        public static string KeywordAppend = "\" />";
+        public const string KeywordAppend = "\" />";
     }
 }

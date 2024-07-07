@@ -7,6 +7,7 @@ namespace BundleARMACommands.Actions;
 
 public static class Scraper
 {
+    private static ReadOnlyCollection<string> Filter => Common.Filter;
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
         if (website == null)
@@ -19,15 +20,15 @@ public static class Scraper
         if (website.Prepend)
         {
             Console.WriteLine($"Website type: '{website.SiteType}' has prepend enabled, adding prepend list to existing commands");
-            commands.AddRange(Global.Prepend);
+            commands.AddRange(Common.Prepend);
         }
 
         if (website.SiteType == WebsiteType.CBA)
         {
-            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Global.CBAAppend} to command name");
+            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Common.CBAAppend} to command name");
             foreach (var command in commands)
             {
-                var cbaCommand = $"{Global.CBAAppend}{command}";
+                var cbaCommand = $"{Common.CBAAppend}{command}";
                 returnCommands.Add(cbaCommand);
             }
         }
@@ -39,7 +40,7 @@ public static class Scraper
         return returnCommands;
     }
 
-    public static List<string> FinaliseCommands(ICollection<string> commands, string path)
+    public static List<string> FinaliseCommands(ICollection<string> commands)
     {
         if (commands is null)
             throw new ArgumentNullException(nameof(commands));
@@ -47,7 +48,7 @@ public static class Scraper
         var finalCommands = new List<string>();
 
         foreach (var command in commands)
-            finalCommands.Add($"{Global.KeywordPrepend}{command}{Global.KeywordAppend}");
+            finalCommands.Add($"{Common.KeywordPrepend}{command}{Common.KeywordAppend}");
 
         return finalCommands;
     }
@@ -64,7 +65,7 @@ public static class Scraper
         var nodes = rawHtml.DocumentNode.SelectNodes(website.XPath) ??
             throw new ArgumentOutOfRangeException($"Error: No nodes found for '{website.SiteType}'");
 
-        var commands = nodes.Where(node => !Global.Filter.Contains(node.InnerText))
+        var commands = nodes.Where(node => !Filter.Contains(node.InnerText))
             .Select(node => node.InnerText.Trim().Replace(' ', '_'))
             .ToList();
 

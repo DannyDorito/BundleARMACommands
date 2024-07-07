@@ -36,7 +36,7 @@ public static class Writer
         if (commands is null)
             throw new ArgumentNullException(nameof(commands));
 
-        var finalCommands = Scraper.FinaliseCommands(commands, path);
+        var finalCommands = Scraper.FinaliseCommands(commands);
 
         Console.WriteLine($"Reading existing .xml file from '{path}'");
 
@@ -76,10 +76,10 @@ public static class Writer
 
         var file = File.ReadAllLines(path).ToList();
 
-        var c = Global.KeywordPrepend;
+        var c = Common.KeywordPrepend;
 
-        var start = file.FindIndex(line => line.StartsWith(Global.KeywordPrepend, StringComparison.Ordinal));
-        var end = file.FindLastIndex(line => line.StartsWith(Global.KeywordPrepend, StringComparison.Ordinal));
+        var start = file.FindIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
+        var end = file.FindLastIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
 
         if (start == -1 || end == -1)
             throw new ArgumentException("Error: Could not find start and end of keywords in file.", path);
