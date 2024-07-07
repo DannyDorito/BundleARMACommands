@@ -5,13 +5,15 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AnalysisLevel>6.0-all</AnalysisLevel>
+    <AnalysisLevel>6.0-recommended</AnalysisLevel>
     <PublishAot>False</PublishAot>
     <RepositoryUrl>https://github.com/DannyDorito/BundleARMACommands</RepositoryUrl>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <Trimming>full</Trimming>
     <Title>Bundle ARMA Commands</Title>
     <Authors>John Allison</Authors>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PublishTrimmed>True</PublishTrimmed>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,8 +28,21 @@
 
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.4.2" />
-    <PackageReference Include="System.Management.Automation" Version="7.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

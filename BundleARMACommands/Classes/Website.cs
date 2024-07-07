@@ -1,4 +1,6 @@
-﻿namespace BundleARMACommands.Classes;
+﻿using BundleARMACommands.Enums;
+
+namespace BundleARMACommands.Classes;
 
 public class Website(Uri uri, WebsiteType siteType)
 {
@@ -9,16 +11,10 @@ public class Website(Uri uri, WebsiteType siteType)
 
     public string XPath => SiteType switch
     {
-        WebsiteType.Commands => "//div[contains(@id, 'mw-pages')]//li[not(contains(@class, 'bohemia-header-nav-item'))]",
-        WebsiteType.Functions => "//div[contains(@id, 'mw-pages')]//li[not(contains(@class, 'bohemia-header-nav-item'))]",
-        WebsiteType.CBA => "//td[@class='IEntry']",
+        WebsiteType.Commands => Resources.ScriptingCommandsRegex,
+        WebsiteType.Functions => Resources.FunctionsRegex,
+        WebsiteType.CBA => Resources.CBARegex,
         _ => string.Empty,
     };
 }
 
-public enum WebsiteType
-{
-    Commands,
-    Functions,
-    CBA
-}

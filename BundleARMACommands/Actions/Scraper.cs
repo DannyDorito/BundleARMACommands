@@ -1,23 +1,13 @@
 ﻿using BundleARMACommands.Classes;
+using BundleARMACommands.Enums;
 using HtmlAgilityPack;
 using System.Collections.ObjectModel;
 
-namespace BundleARMACommands;
+namespace BundleARMACommands.Actions;
 
 public static class Scraper
 {
-    public static readonly Collection<Website> WebsitesToScrape =
-    [
-        new Website(new("https://community.bistudio.com/wiki/Category:Scripting_Commands"), WebsiteType.Commands),
-        new Website(new("https://community.bistudio.com/wiki/Category:Functions"), WebsiteType.Functions),
-        new Website(new("https://cbateam.github.io/CBA_A3/docs/index/Functions.html"), WebsiteType.CBA)
-    ];
-
-    private static readonly Collection<string> Filter = ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];
-    private static readonly Collection<string> Prepend = ["_exception", "_forEachIndex", "_this", "_thisArgs", "_thisEvent", "_thisEventHandler", "_thisFSM", "_thisScript", "_thisScriptedEventHandler", "_time", "_x", "_y"];
-
-    private const string CBAAppend = "CBA_fnc_";
-
+    private static ReadOnlyCollection<string> Filter => Common.Filter;
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
         if (website == null)
@@ -30,15 +20,15 @@ public static class Scraper
         if (website.Prepend)
         {
             Console.WriteLine($"Website type: '{website.SiteType}' has prepend enabled, adding prepend list to existing commands");
-            commands.AddRange(Prepend);
+            commands.AddRange(Common.Prepend);
         }
 
         if (website.SiteType == WebsiteType.CBA)
         {
-            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {CBAAppend} to command name");
+            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Common.CBAAppend} to command name");
             foreach (var command in commands)
             {
-                var cbaCommand = $"{CBAAppend}{command}";
+                var cbaCommand = $"{Common.CBAAppend}{command}";
                 returnCommands.Add(cbaCommand);
             }
         }
@@ -48,6 +38,19 @@ public static class Scraper
         }
 
         return returnCommands;
+    }
+
+    public static List<string> FinaliseCommands(ICollection<string> commands)
+    {
+        if (commands is null)
+            throw new ArgumentNullException(nameof(commands));
+
+        var finalCommands = new List<string>();
+
+        foreach (var command in commands)
+            finalCommands.Add($"{Common.KeywordPrepend}{command}{Common.KeywordAppend}");
+
+        return finalCommands;
     }
 
     private static async Task<List<string>> GetRawData(Website website, CancellationToken cancellationToken)
