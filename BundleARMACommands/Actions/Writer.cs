@@ -76,8 +76,6 @@ public static class Writer
 
         var file = File.ReadAllLines(path).ToList();
 
-        var c = Common.KeywordPrepend;
-
         var start = file.FindIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
         var end = file.FindLastIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
 
