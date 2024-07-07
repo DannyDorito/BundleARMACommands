@@ -12,6 +12,8 @@
     <Trimming>full</Trimming>
     <Title>Bundle ARMA Commands</Title>
     <Authors>John Allison</Authors>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <PublishTrimmed>True</PublishTrimmed>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -25,7 +27,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.60" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
   </ItemGroup>
 
   <ItemGroup>
