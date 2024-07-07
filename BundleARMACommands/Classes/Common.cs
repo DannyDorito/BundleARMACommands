@@ -12,7 +12,8 @@ namespace BundleARMACommands.Classes
                 new Website(new(Resources.CBAUrl), WebsiteType.CBA)
         ];
 
-        private static ReadOnlyCollection<string> InternalFilter()
+        [Obsolete]
+        private static ReadOnlyCollection<string> OldInternalFilter()
         {
             var filterArray = Resources.Filter.Split(',');
             var filterList = new List<string>();
@@ -23,7 +24,10 @@ namespace BundleARMACommands.Classes
             return filterList.AsReadOnly();
         }
 
-        public static ReadOnlyCollection<string> Filter => InternalFilter();
+        public static ReadOnlyCollection<string> Filter => new(InternalFilter);
+
+        public static List<string> InternalFilter => ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];
+
         public static string[] Prepend => Resources.Prepend.Split(',');
 
         public static string CBAAppend => Resources.CBAAppend;
