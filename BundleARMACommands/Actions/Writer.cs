@@ -5,6 +5,7 @@ namespace BundleARMACommands.Actions;
 
 public static class Writer
 {
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1002:Do not expose generic lists", Justification = "<Pending>")]
     public static bool WriteXML(List<string> commands, string path, FileType type)
     {
         if (commands is null)
@@ -31,6 +32,7 @@ public static class Writer
         };
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1002:Do not expose generic lists", Justification = "<Pending>")]
     public static bool WriteAutoComplete(List<string>? commands, string path)
     {
         if (commands is null)
@@ -60,6 +62,7 @@ public static class Writer
         return hasChanged;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1002:Do not expose generic lists", Justification = "<Pending>")]
     public static bool WriteSyntaxHiglighting(List<string>? commands, string path)
     {
         if (commands is null)
@@ -76,8 +79,8 @@ public static class Writer
 
         var file = File.ReadAllLines(path).ToList();
 
-        var start = file.FindIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
-        var end = file.FindLastIndex(line => line.StartsWith(Common.KeywordPrepend, StringComparison.Ordinal));
+        var start = file.FindIndex(line => line.StartsWith(Universal.KeywordPrepend, StringComparison.Ordinal));
+        var end = file.FindLastIndex(line => line.StartsWith(Universal.KeywordPrepend, StringComparison.Ordinal));
 
         if (start == -1 || end == -1)
             throw new ArgumentException("Error: Could not find start and end of keywords in file.", path);

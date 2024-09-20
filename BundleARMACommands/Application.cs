@@ -15,7 +15,7 @@ internal class Program
 
         var commands = new List<string>();
 
-        foreach (var website in Common.WebsitesToScrape)
+        foreach (var website in Universal.WebsitesToScrape)
             commands.AddRange(await Scraper.GetData(website, CancellationToken.None).ConfigureAwait(true));
 
         Console.WriteLine($"Setting String Comparison to '{StringComparer.OrdinalIgnoreCase}'");

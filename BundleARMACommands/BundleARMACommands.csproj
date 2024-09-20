@@ -5,7 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <AnalysisLevel>6.0-recommended</AnalysisLevel>
+    <AnalysisLevel>6.0-all</AnalysisLevel>
     <PublishAot>False</PublishAot>
     <RepositoryUrl>https://github.com/DannyDorito/BundleARMACommands</RepositoryUrl>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>

@@ -7,7 +7,7 @@ namespace BundleARMACommands.Actions;
 
 public static class Scraper
 {
-    private static ReadOnlyCollection<string> Filter => Common.Filter;
+    private static ReadOnlyCollection<string> Filter => Universal.Filter;
     public static async Task<List<string>> GetData(Website? website, CancellationToken cancellationToken)
     {
         if (website == null)
@@ -20,15 +20,15 @@ public static class Scraper
         if (website.Prepend)
         {
             Console.WriteLine($"Website type: '{website.SiteType}' has prepend enabled, adding prepend list to existing commands");
-            commands.AddRange(Common.Prepend);
+            commands.AddRange(Universal.Prepend());
         }
 
         if (website.SiteType == WebsiteType.CBA)
         {
-            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Common.CBAAppend} to command name");
+            Console.WriteLine($"Website type: '{website.SiteType}' is a CBA type, adding appending {Universal.CBAAppend} to command name");
             foreach (var command in commands)
             {
-                var cbaCommand = $"{Common.CBAAppend}{command}";
+                var cbaCommand = $"{Universal.CBAAppend}{command}";
                 returnCommands.Add(cbaCommand);
             }
         }
@@ -40,6 +40,7 @@ public static class Scraper
         return returnCommands;
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1002:Do not expose generic lists", Justification = "<Pending>")]
     public static List<string> FinaliseCommands(ICollection<string> commands)
     {
         if (commands is null)
@@ -48,7 +49,7 @@ public static class Scraper
         var finalCommands = new List<string>();
 
         foreach (var command in commands)
-            finalCommands.Add($"{Common.KeywordPrepend}{command}{Common.KeywordAppend}");
+            finalCommands.Add($"{Universal.KeywordPrepend}{command}{Universal.KeywordAppend}");
 
         return finalCommands;
     }

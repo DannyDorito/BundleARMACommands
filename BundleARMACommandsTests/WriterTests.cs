@@ -1,6 +1,6 @@
 using BundleARMACommands.Actions;
-using BundleARMACommands.Enums;
 using BundleARMACommands.Classes;
+using BundleARMACommands.Enums;
 namespace BundleARMACommandsTests;
 
 [TestFixture]
@@ -15,8 +15,8 @@ public class WriterTests
         File.WriteAllLines(TestFilePath, new List<string>
             {
                 "<root>",
-                $"{Common.KeywordPrepend}command1{Common.KeywordAppend}",
-                $"{Common.KeywordPrepend}command2{Common.KeywordAppend}",
+                $"{Universal.KeywordPrepend}command1{Universal.KeywordAppend}",
+                $"{Universal.KeywordPrepend}command2{Universal.KeywordAppend}",
                 "</root>"
             });
     }
