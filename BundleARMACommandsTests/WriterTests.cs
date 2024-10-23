@@ -62,15 +62,7 @@ public class WriterTests
     {
         // Create a file without keyword lines
         File.WriteAllLines(TestFilePath, new List<string> { "<root>", "</root>" });
-
-        if (type == FileType.AutoComplete)
-        {
-            Assert.Throws<ArgumentException>(() => Writer.ReadXml(string.Empty, type));
-        }
-        else
-        {
-            Assert.Throws<NotImplementedException>(() => Writer.ReadXml(string.Empty, type));
-        }
+        Assert.Throws<ArgumentException>(() => Writer.ReadXml(string.Empty, type));
     }
 
     [Test]
