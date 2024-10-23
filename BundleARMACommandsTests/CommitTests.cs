@@ -5,7 +5,7 @@ namespace BundleARMACommandsTests;
 [TestFixture]
 public class CommitTests
 {
-    [Test]
+    [Test, Ignore("Only works locally")]
     public void PushToNpp()
     {
         Assert.DoesNotThrowAsync(() => Commit.PushToRepo("F:\\GitHub\\npp-sqf", CancellationToken.None));

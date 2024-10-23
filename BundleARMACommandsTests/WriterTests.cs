@@ -39,14 +39,21 @@ public class WriterTests
     [TestCase(FileType.SyntaxHighlighting)]
     public void ReadXML_ValidPath_ReturnsFileLines(FileType type)
     {
-        var fileLines = Writer.ReadXml(string.Empty, type);
 
-        //Assert.Multiple(() =>
-        //{
-        //    Assert.That(start, Is.EqualTo(1));
-        //    Assert.That(end, Is.EqualTo(2));
-        //    Assert.That(fileLines, Has.Count.EqualTo(4));
-        //});
+        if (type == FileType.AutoComplete)
+        {
+            var fileLines = Writer.ReadXml(TestFilePath, type);
+            Assert.Multiple(() =>
+            {
+                Assert.That(fileLines.Item2, Is.EqualTo(1));
+                Assert.That(fileLines.Item3, Is.EqualTo(2));
+                Assert.That(fileLines.Item1, Has.Count.EqualTo(4));
+            });
+        }
+        else
+        {
+            Assert.Throws<NotImplementedException>(() => Writer.ReadXml(TestFilePath, type));
+        }
     }
 
     [TestCase(FileType.AutoComplete)]
@@ -56,7 +63,14 @@ public class WriterTests
         // Create a file without keyword lines
         File.WriteAllLines(TestFilePath, new List<string> { "<root>", "</root>" });
 
-        Assert.Throws<ArgumentException>(() => Writer.ReadXml(string.Empty, type));
+        if (type == FileType.AutoComplete)
+        {
+            Assert.Throws<ArgumentException>(() => Writer.ReadXml(string.Empty, type));
+        }
+        else
+        {
+            Assert.Throws<NotImplementedException>(() => Writer.ReadXml(string.Empty, type));
+        }
     }
 
     [Test]
