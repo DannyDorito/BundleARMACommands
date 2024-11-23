@@ -8,7 +8,7 @@ public class CommitTests
     [Test, Ignore("Only works locally")]
     public void PushToNpp()
     {
-        Assert.DoesNotThrowAsync(() => Commit.PushToRepo("F:\\GitHub\\npp-sqf", CancellationToken.None));
+        Assert.DoesNotThrowAsync(() => Commit.PushToRepo("E:\\GitHub\\npp-sqf", CancellationToken.None));
     }
 
     [Test]
