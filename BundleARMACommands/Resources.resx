@@ -127,7 +127,7 @@
     <value>https://cbateam.github.io/CBA_A3/docs/index/Functions.html</value>
   </data>
   <data name="Filter" xml:space="preserve">
-    <value>a != b,! a,a != b,a % b,a &amp;&amp; b,a * b,a / b,a : b,a = b,a == b,a greater b,a greater= b,a hash b,a less b,a less= b,a or b,a ^ b,+,-</value>
+    <value>a != b,! a,a != b,a % b,a &amp;&amp; b,a * b,a / b,a : b,a = b,a == b,a greater b,a greater= b,a hash b,a less b,a less= b,a or b,a ^ b,+,-,User:OverlordZorn/Sandbox</value>
     <comment>Not Used</comment>
   </data>
   <data name="FunctionsRegex" xml:space="preserve">

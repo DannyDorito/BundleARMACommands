@@ -14,7 +14,7 @@ namespace BundleARMACommands.Classes
 
         public static ReadOnlyCollection<string> Filter => new(InternalFilter);
 
-        private static List<string> InternalFilter => ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-"];
+        private static List<string> InternalFilter => ["a != b", "! a", "a != b", "a % b", "a && b", "a &amp;&amp; b", "a * b", "a / b", "a : b", "a = b", "a == b", "a greater b", "a greater= b", "a hash b", "a less b", "a less= b", "a or b", "a ^ b", "+", "-", "User:OverlordZorn/Sandbox"];
 
         public static string[] Prepend() => Resources.Prepend.Split(',');
 
