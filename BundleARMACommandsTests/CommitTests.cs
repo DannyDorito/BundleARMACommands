@@ -8,18 +8,18 @@ public class CommitTests
     [Test, Ignore("Only works locally")]
     public void PushToNpp()
     {
-        Assert.DoesNotThrowAsync(() => Commit.PushToRepo("E:\\GitHub\\npp-sqf", CancellationToken.None));
+        Assert.DoesNotThrowAsync(() => Commit.PushToRepo("E:\\GitHub\\npp-sqf"));
     }
 
     [Test]
     public void PushToNpp_RepoNull()
     {
-        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToRepo("", CancellationToken.None));
+        Assert.ThrowsAsync<ArgumentNullException>(() => Commit.PushToRepo(""));
     }
 
     [Test]
     public void PushToNpp_RepoNotExists()
     {
-        Assert.ThrowsAsync<DirectoryNotFoundException>(() => Commit.PushToRepo("repo/location", CancellationToken.None));
+        Assert.ThrowsAsync<DirectoryNotFoundException>(() => Commit.PushToRepo("repo/location"));
     }
 }

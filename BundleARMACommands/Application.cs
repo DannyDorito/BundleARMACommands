@@ -29,22 +29,18 @@ internal class Program
         bool? commit = null;
         try
         {
-            commit = args.ElementAtOrDefault(2) != "no-commit";
+            commit = args.ElementAt(2) != "no-commit";
             if (!commit.Value)
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-                Console.WriteLine($"Found no commit at {nameof(args)}, skipping pushing changes to repo.");
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
+                Console.WriteLine($"Found no-commit in {nameof(args)}, skipping pushing changes to repo.");
         }
         catch (ArgumentNullException)
         {
-#pragma warning disable CA1303 // Do not pass literals as localized parameters
-            Console.WriteLine($"Did not find no commit at {nameof(args)}, pushing changes to repo.");
-#pragma warning restore CA1303 // Do not pass literals as localized parameters
+            Console.WriteLine($"Did not find no-commit in {nameof(args)}, pushing changes to repo.");
         }
 
         if (changed && (commit.HasValue && commit.Value))
         {
-            await Commit.PushToRepo(args.ElementAt(1), CancellationToken.None).ConfigureAwait(true);
+            await Commit.PushToRepo(args.ElementAt(1)).ConfigureAwait(true);
             Console.WriteLine($"Pushed Changes to {args.ElementAt(1)} repo.");
         }
 
