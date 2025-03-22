@@ -1,5 +1,5 @@
-using BundleARMACommands.Classes;
-using BundleARMACommands.Enums;
+using ARMACommands.Classes;
+using ARMACommands.Enums;
 
 namespace BundleARMACommandsTests;
 

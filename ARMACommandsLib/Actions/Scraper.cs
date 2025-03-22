@@ -1,9 +1,9 @@
-﻿using BundleARMACommands.Classes;
-using BundleARMACommands.Enums;
+﻿using ARMACommands.Classes;
+using ARMACommands.Enums;
 using HtmlAgilityPack;
 using System.Collections.ObjectModel;
 
-namespace BundleARMACommands.Actions;
+namespace ARMACommands.Actions;
 
 public static class Scraper
 {

@@ -1,6 +1,6 @@
-using BundleARMACommands.Actions;
-using BundleARMACommands.Classes;
-using BundleARMACommands.Enums;
+using ARMACommands.Actions;
+using ARMACommands.Classes;
+using ARMACommands.Enums;
 
 namespace BundleARMACommandsTests;
 

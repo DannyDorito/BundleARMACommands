@@ -1,4 +1,4 @@
-﻿namespace BundleARMACommands.Enums
+﻿namespace ARMACommands.Enums
 {
     public enum WebsiteType
     {

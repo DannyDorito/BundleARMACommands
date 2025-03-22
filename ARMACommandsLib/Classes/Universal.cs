@@ -1,7 +1,8 @@
-﻿using BundleARMACommands.Enums;
+﻿using ARMACommands;
+using ARMACommands.Enums;
 using System.Collections.ObjectModel;
 
-namespace BundleARMACommands.Classes;
+namespace ARMACommands.Classes;
 
 public static class Universal
 {

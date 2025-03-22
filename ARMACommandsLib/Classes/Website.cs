@@ -1,6 +1,7 @@
-﻿using BundleARMACommands.Enums;
+﻿using ARMACommands;
+using ARMACommands.Enums;
 
-namespace BundleARMACommands.Classes;
+namespace ARMACommands.Classes;
 
 public class Website(Uri uri, WebsiteType siteType)
 {
